@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados da Mega-Sena - Análise Avançada</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #FFFFFF;
+            color: #2E8B57;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #006400;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+            padding: 20px;
+            margin-bottom: 40px;
+        }
+
+        .filters-section {
+            border: 1px solid #4CAF50;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            background-color: #f8f9fa;
+            width: 100%;
+        }
+
+        .filters-section h3 {
+            color: #006400;
+            margin-top: 0;
+            font-size: 1.1em;
+            border-bottom: 2px solid #4CAF50;
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+            justify-content: center;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            margin: 5px;
+        }
+
+        .filter-label {
+            font-size: 12px;
+            color: #006400;
+            margin-bottom: 5px;
+        }
+
+        select, input {
+            padding: 8px;
+            border: 1px solid #4CAF50;
+            border-radius: 4px;
+            font-size: 14px;
+            min-width: 150px;
+        }
+
+        .button {
+            background-color: #32CD32;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .button:hover {
+            background-color: #28a745;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background-color: #F0F8FF;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #4CAF50;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #F9F9F9;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #FFFFFF;
+        }
+
+        .loading, .completed {
+            text-align: center;
+            font-size: 18px;
+            margin: 10px 0;
+        }
+
+        .loading {
+            color: #FF6347;
+        }
+
+        .completed {
+            color: #32CD32;
+        }
+
+        .no-results {
+            text-align: center;
+            font-size: 20px;
+            color: #FF6347;
+        }
+
+        span{
+            text-align: center;
+            font-size: 16px;
+            color: #FF6347;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 20px 0;
+        }
+        p{ text-align: center;}
+        @media only screen and (max-width: 600px) {
+            footer {
+                color: red;
+                font-size: 12px;
+            }
+            }
+        @media (max-width: 768px) {
+            .filter-group {
+                width: 100%;
+            }
+            
+            select, input {
+                width: 100%;
+            }
+            
+            .button {
+                width: 100%;
+                margin: 5px 0;
+            }
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Resultados da Mega-Sena</h1>
+    
+    <div class="centralizado">
+        <p>Resultados de todos os sorteios da Mega Sena - <b>com filtros mega avançados</b></p>
+    </div>
+
+
+
+    <div class="filters-section">
+        <h3>Filtros Básicos</h3>
+        <div class="filter-row">
+            <div class="filter-group">
+                <span class="filter-label">Dia</span>
+                <input type="number" id="filterDay" min="1" max="31" placeholder="Dia">
+            </div>
+            
+            <div class="filter-group">
+                <span class="filter-label">Mês</span>
+                <select id="filterMonth">
+                    <option value="">Todos os meses</option>
+                    <option value="01">Janeiro</option>
+                    <option value="02">Fevereiro</option>
+                    <option value="03">Março</option>
+                    <option value="04">Abril</option>
+                    <option value="05">Maio</option>
+                    <option value="06">Junho</option>
+                    <option value="07">Julho</option>
+                    <option value="08">Agosto</option>
+                    <option value="09">Setembro</option>
+                    <option value="10">Outubro</option>
+                    <option value="11">Novembro</option>
+                    <option value="12">Dezembro</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <span class="filter-label">Ano</span>
+                <input type="number" id="filterYear" min="1996" max="2025" placeholder="Ano">
+            </div>
+
+            <div class="filter-group">
+                <span class="filter-label">Concurso</span>
+                <input type="number" id="filterConcurso" min="1" placeholder="Nº do Concurso">
+            </div>
+        </div>
+    </div>
+
+    <div class="filters-section">
+        <h3>Filtros por Paridade</h3>
+        <div class="filter-row">
+            <div class="filter-group">
+                <span class="filter-label">Quantidade de Pares</span>
+                <select id="filterParidade">
+                    <option value="">Qualquer quantidade</option>
+                    <option value="0">0 pares (6 ímpares)</option>
+                    <option value="1">1 par (5 ímpares)</option>
+                    <option value="2">2 pares (4 ímpares)</option>
+                    <option value="3">3 pares (3 ímpares)</option>
+                    <option value="4">4 pares (2 ímpares)</option>
+                    <option value="5">5 pares (1 ímpar)</option>
+                    <option value="6">6 pares (0 ímpares)</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <span class="filter-label">Tipo de Números</span>
+                <select id="filterTipoNumeros">
+                    <option value="">Todos os tipos</option>
+                    <option value="pares">Apenas Pares</option>
+                    <option value="impares">Apenas Ímpares</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="filters-section">
+        <h3>Filtros por Faixa</h3>
+        <div class="filter-row">
+            <div class="filter-group">
+                <span class="filter-label">Números maiores que</span>
+                <select id="filterMaiorQue">
+                    <option value="">Sem filtro</option>
+                    <option value="10">Maior que 10</option>
+                    <option value="20">Maior que 20</option>
+                    <option value="30">Maior que 30</option>
+                    <option value="40">Maior que 40</option>
+                    <option value="50">Maior que 50</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <span class="filter-label">Números menores que</span>
+                <select id="filterMenorQue">
+                    <option value="">Sem filtro</option>
+                    <option value="10">Menor que 10</option>
+                    <option value="20">Menor que 20</option>
+                    <option value="30">Menor que 30</option>
+                    <option value="40">Menor que 40</option>
+                    <option value="50">Menor que 50</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="filters-section">
+        <h3>Outros Filtros</h3>
+        <div class="filter-row">
+            <div class="filter-group">
+                <span class="filter-label">Números específicos</span>
+                <input type="text" id="filterNumbers" placeholder="Ex: 6,12,25">
+            </div>
+            
+            <div class="filter-group">
+                <span class="filter-label">Ordenação</span>
+                <select id="filterOrder">
+                    <option value="0">Crescente</option>
+                    <option value="2">Decrescente</option>
+                    <option value="3">Ordem do sorteio</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <button class="button" onclick="clearFilters()">
+            <i class="fas fa-eraser"></i> Limpar Filtros
+        </button>
+        <button class="button" onclick="fetchAllMegaSenaResults()">
+            <i class="fas fa-sync-alt"></i> Carregar Resultados
+        </button>
+    </div>
+
+    <div id="loadingMessage" class="loading" style="display: none;">
+        <i class="fas fa-spinner fa-spin"></i> Carregando resultados...
+    </div>
+    <div id="completedMessage" class="completed" style="display: none;">
+        <i class="fas fa-check-circle"></i> Carregamento concluído!
+    </div>
+    
+    <div id="resultCount" style="margin: 20px 0; text-align: center; font-size: 16px; color: #006400;">
+        <i class="fas fa-table"></i> Total de resultados: <span id="countNumber">0</span>
+        <button id="downloadBtn" class="button" style="margin-left: 15px;" onclick="downloadResults()">
+            <i class="fas fa-download"></i> Download CSV
+        </button>
+    </div>
+
+    <table id="megaSenaResults">
+        <thead>
+            <tr>
+                <th>Concurso</th>
+                <th>Data do Sorteio</th>
+                <th>Dezenas Sorteadas</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+
+</div>
+<footer>Feito por: <i>Márcio Fernando Maia - Todos os direitos reservados - 2025</i></footer>
+
+
+<script>
+let allResults = [];
+let originalResults = [];
+let currentFilteredResults = [];
+
+async function fetchAllMegaSenaResults() {
+    const baseUrl = 'https://loteriascaixa-api.herokuapp.com/api/megasena';
+    const loadingMessage = document.getElementById('loadingMessage');
+    const completedMessage = document.getElementById('completedMessage');
+    const tableBody = document.getElementById('megaSenaResults').getElementsByTagName('tbody')[0];
+
+    loadingMessage.style.display = 'block';
+    completedMessage.style.display = 'none';
+    tableBody.innerHTML = '';
+    allResults = [];
+
+    try {
+        const response = await fetch(baseUrl);
+        if (!response.ok) throw new Error('Erro ao acessar a API.');
+
+        const data = await response.json();
+
+        if (Array.isArray(data) && data.length > 0 && Array.isArray(data[0].dezenas)) {
+            allResults = data.map(item => ({
+                concurso: item.concurso,
+                data: item.data,
+                dezenas: item.dezenas,
+                dezenasOrdemSorteio: item.dezenasOrdemSorteio
+            }));
+
+            originalResults = JSON.parse(JSON.stringify(allResults));
+            applyFilters();
+        } else {
+            throw new Error('Formato de dados inválido.');
+        }
+    } catch (error) {
+        console.error(error);
+        alert('Erro ao buscar os resultados. Tente novamente.');
+    } finally {
+        loadingMessage.style.display = 'none';
+        completedMessage.style.display = 'block';
+    }
+}
+
+function countPares(dezenas) {
+    return dezenas.filter(num => parseInt(num) % 2 === 0).length;
+}
+function applyFilters() {
+    const filterDay = document.getElementById('filterDay').value.trim();
+    const filterMonth = document.getElementById('filterMonth').value.trim();
+    const filterYear = document.getElementById('filterYear').value.trim();
+    const filterConcurso = document.getElementById('filterConcurso').value.trim();
+    const filterOrder = document.getElementById('filterOrder').value;
+    const filterNumbers = document.getElementById('filterNumbers').value.trim();
+    const filterParidade = document.getElementById('filterParidade').value;
+    const filterTipoNumeros = document.getElementById('filterTipoNumeros').value;
+    const filterMaiorQue = document.getElementById('filterMaiorQue').value;
+    const filterMenorQue = document.getElementById('filterMenorQue').value;
+
+    let filteredResults = originalResults.filter(result => {
+        const [day, month, year] = result.data.split('/');
+        const dezenas = result.dezenas.map(d => parseInt(d));
+        
+        // Filtros básicos de data e concurso
+        const dayMatch = !filterDay || parseInt(day) === parseInt(filterDay);
+        const monthMatch = !filterMonth || month === filterMonth;
+        const yearMatch = !filterYear || year === filterYear;
+        const concursoMatch = !filterConcurso || parseInt(filterConcurso) === result.concurso;
+
+        // Filtro de números específicos - CORRIGIDO
+        let numbersMatch = true;
+        if (filterNumbers) {
+            const searchNumbers = filterNumbers
+                .split(',')
+                .map(n => n.trim())
+                .filter(n => n !== '')
+                .map(n => {
+                    // Converte para número e depois volta para string com zero à esquerda
+                    const num = parseInt(n);
+                    return isNaN(num) ? '' : num.toString().padStart(2, '0');
+                })
+                .filter(n => n !== ''); // Remove números inválidos
+            
+            if (searchNumbers.length > 0) {
+                numbersMatch = searchNumbers.every(num => result.dezenas.includes(num));
+            }
+        }
+
+        // Filtro de paridade
+        let paridadeMatch = true;
+        if (filterParidade !== '') {
+            const paresCont = countPares(result.dezenas);
+            paridadeMatch = paresCont === parseInt(filterParidade);
+        }
+
+        // Filtro por tipo de números (pares/ímpares)
+        let tipoNumerosMatch = true;
+        if (filterTipoNumeros === 'pares') {
+            tipoNumerosMatch = dezenas.every(num => num % 2 === 0);
+        } else if (filterTipoNumeros === 'impares') {
+            tipoNumerosMatch = dezenas.every(num => num % 2 !== 0);
+        }
+
+        // Filtros de faixa
+        let faixaMatch = true;
+        if (filterMaiorQue) {
+            faixaMatch = dezenas.every(num => num > parseInt(filterMaiorQue));
+        }
+        if (filterMenorQue) {
+            faixaMatch = faixaMatch && dezenas.every(num => num < parseInt(filterMenorQue));
+        }
+
+        return dayMatch && monthMatch && yearMatch && concursoMatch && 
+               numbersMatch && paridadeMatch && tipoNumerosMatch && faixaMatch;
+    });
+
+    // Aplicar ordenação
+    filteredResults = filteredResults.map(result => {
+        const newResult = { ...result };
+        if (filterOrder === "2") {
+            newResult.dezenas = [...result.dezenas].sort((a, b) => parseInt(b) - parseInt(a));
+        } else if (filterOrder === "3") {
+            newResult.dezenas = result.dezenasOrdemSorteio;
+        } else {
+            newResult.dezenas = [...result.dezenas].sort((a, b) => parseInt(a) - parseInt(b));
+        }
+        return newResult;
+    });
+
+    renderResults(filteredResults);
+}
+
+
+function renderResults(results) {
+    const tableBody = document.getElementById('megaSenaResults').getElementsByTagName('tbody')[0];
+    const countElement = document.getElementById('countNumber');
+    currentFilteredResults = results;
+    tableBody.innerHTML = '';
+
+    if (results.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="3" class="no-results">Nenhum resultado encontrado.</td></tr>';
+        countElement.textContent = '0';
+        return;
+    }
+
+    countElement.textContent = results.length;
+
+    results.forEach(result => {
+        const row = tableBody.insertRow();
+        row.innerHTML = `
+            <td>${result.concurso}</td>
+            <td>${result.data}</td>
+            <td>${result.dezenas.join(' - ')}</td>`;
+    });
+}
+
+function clearFilters() {
+    // Limpar todos os filtros
+    document.getElementById('filterDay').value = '';
+    document.getElementById('filterMonth').value = '';
+    document.getElementById('filterYear').value = '';
+    document.getElementById('filterConcurso').value = '';
+    document.getElementById('filterNumbers').value = '';
+    document.getElementById('filterOrder').value = '0';
+    document.getElementById('filterParidade').value = '';
+    document.getElementById('filterTipoNumeros').value = '';
+    document.getElementById('filterMaiorQue').value = '';
+    document.getElementById('filterMenorQue').value = '';
+    renderResults(originalResults);
+}
+
+function downloadResults() {
+    if (currentFilteredResults.length === 0) {
+        alert('Não há resultados para baixar.');
+        return;
+    }
+
+    // Prepara os dados para o CSV com informações adicionais
+    const csvContent = [
+        ['Concurso', 'Data', 'Dezenas Sorteadas', 'Qtd Pares', 'Qtd Ímpares', 'Menor Número', 'Maior Número']
+    ];
+
+    currentFilteredResults.forEach(result => {
+        const dezenas = result.dezenas.map(d => parseInt(d));
+        const qtdPares = dezenas.filter(num => num % 2 === 0).length;
+        const qtdImpares = 6 - qtdPares;
+        const menorNumero = Math.min(...dezenas);
+        const maiorNumero = Math.max(...dezenas);
+
+        csvContent.push([
+            result.concurso,
+            result.data,
+            result.dezenas.join(' - '),
+            qtdPares,
+            qtdImpares,
+            menorNumero,
+            maiorNumero
+        ]);
+    });
+
+    // Converte para o formato CSV
+    const csv = csvContent.map(row => row.join(',')).join('\n');
+    
+    // Cria o blob e o link para download
+    const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    
+    link.setAttribute('href', url);
+    link.setAttribute('download', `mega-sena-resultados-${new Date().toLocaleDateString()}.csv`);
+    link.style.visibility = 'hidden';
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
+
+// Adicionar eventos de change/input para todos os filtros
+document.addEventListener('DOMContentLoaded', function() {
+    const filterIds = [
+        'filterDay', 'filterMonth', 'filterYear', 'filterConcurso',
+        'filterNumbers', 'filterOrder', 'filterParidade', 'filterTipoNumeros',
+        'filterMaiorQue', 'filterMenorQue'
+    ];
+    
+    filterIds.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.addEventListener('input', applyFilters);
+            element.addEventListener('change', applyFilters);
+        }
+    });
+});
+</script>
+
+</body>
+</html>
