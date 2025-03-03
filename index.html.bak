@@ -16,7 +16,6 @@
         <a href="https://www.lottoland.com/br/loterias/" target="_blank" disable>Lottoland</a>
         <a href="https://www.lotoloto.com.br/" target="_blank" disable>Lotoloto</a>
         <a href="https://confiraloterias.com.br/" target="_blank" style="color: red;">Conferidor</a>
-        <a href="" target="_blank" style="color: yellowgreen;">Combinações</a>
     </div>
       
   <div class="main">
@@ -27,7 +26,7 @@
         <div style="overflow-x: auto;">
           <table>
             <tr>
-              <th>MEGA SENA</th>
+              <th><a href="https://abrirsitesremotoms.onrender.com" target="_blank" enable>MEGA SENA</a></th>
               <th>I</th>
               <th>II</th>
               <th>III</th>
@@ -43,8 +42,8 @@
               <td><a href="https://tabelacruzamentonumeros.onrender.com" target="_blank" enable>Tabela de Cruzamentos de Numeros</a></td>
               <td><a href="https://palpitesmegasena.onrender.com" target="_blank" enable>Palpites I</a></td>
               <td><a href="https://palpitesms.onrender.com" target="_blank" enable>Palpites II</a></td>
+              <td><a href="https://palpitesmegas.onrender.com" target="_blank" enable>Palpites III</a></td>
               <td><a href="https://colunas.onrender.com" target="_blank" enable>Colunas</a></td>
-              <td><a href="#" target="_blank" disable>Editar</small></a></td>
               <td><a href="#" target="_blank" disable>Editar</a> </td>
 
 
@@ -54,7 +53,7 @@
               <td class="align-left">Estatísticas</td>
               <td><a href="https://resumomegasena.onrender.com" target="_blank" enable>Resumo</a></td>
               <td><a href="HistoricoDeResultados/index1a.html" target="_blank" enable>Quadrantes</a> </td>
-              <td><a href="#" target="_blank" disable>Editar</a></td>
+              <td><a href="https://resultadosdigitosmegasena.onrender.com" target="_blank" enable>Dígitos</a> </td>
               <td><a href="#" target="_blank" disable>Editar</a></td>
               <td><a href="#" target="_blank" disable>Editar</a></td>
               <td><a href="#" target="_blank" disable>Editar</a></td>
@@ -64,7 +63,7 @@
             <!-- Resultados Mega Sena -->
             <tr>
                 <td class="align-left">Resultados</td>
-                <td><a href="#" target="_blank" disable>Editar</a></td>
+                <td><a href="https://resultadosalteradosmegasena.netlify.app/" target="_blank" enable>Alterados</a></td>
                 <td><a href="HistoricoDeResultados/index.html" target="_blank" enable>Vertical</a> </td>
                 <td><a href="HistoricoDeResultados/index1.html" target="_blank" enable>Horizontal</a> </td>
                 <td><a href="HistoricoDeResultados/index3.html" target="_blank" enable>Todos Sorteios</a> </td>
@@ -92,7 +91,7 @@
               <td><a href="https://megasenagerador.onrender.com" target="_blank" enable>Pares & Impares</a></td>
               <td><a href="https://megasenades.netlify.app" target="_blank" enable>Desdobramento (30 dez)</a></td>
               <td><a href="HistoricoDeResultados/index2.html" target="_blank" enable>Combinações I (desconto)</a></td>
-			  <td><a href="https://combinacao-i.onrender.com" target="_blank" enable>Combinações II</a></td>
+			  <td><a href="https://combinacao-i.onrender.com" target="_blank" enable>Combinações I</a></td>
             </tr>
           </table><br />
   </div>
